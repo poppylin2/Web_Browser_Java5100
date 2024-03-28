@@ -6,6 +6,11 @@ import java.awt.GridLayout;
 
 import javax.swing.*;
 
+import javafx.application.Platform;
+import javafx.scene.web.WebView;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+
 /**
  * Main interface
  */
@@ -40,7 +45,13 @@ public class Main extends JFrame {
 
     static {
         html.setFont(Constant.smallFont);
+        html.setText("https://www.google.com");
     }
+
+    /*
+     * Build HTML render panel
+     */
+    private static JFXPanel webPanel = new JFXPanel();
 
     /*
      * Navigation button
@@ -67,6 +78,9 @@ public class Main extends JFrame {
         // initialize toolbar
         initToolBar();
 
+        //initialize web View
+        initWeb();
+
         // Add the workspace to the window
         this.add(workSpace);
 
@@ -74,6 +88,19 @@ public class Main extends JFrame {
         this.setVisible(true);
     }
 
+    /*
+     * Initialize Web View
+     */
+    private void initWeb(){
+        Platform.runLater(()-> {
+            //load HTML view
+            WebView webView = new WebView();
+            webPanel.setScene(new Scene(webView));
+            webView.getEngine().load(html.getText());
+        });
+
+        workSpace.add(webPanel, BorderLayout.CENTER);
+    }
     /*
      * Initialize MenuBar
      */
