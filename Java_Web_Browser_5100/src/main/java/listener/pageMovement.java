@@ -24,8 +24,7 @@ public class pageMovement implements ActionListener {
             boolean flag = urlList.right();
             if (!flag) {
                 // Page forward failed
-                JOptionPane.showMessageDialog(null,
-                        "There is no page available in the forward navigation history. Unable to proceed forward.");
+                JOptionPane.showMessageDialog(null, "You are at the initial page. Unable to proceed forward.");
                 return;
             }
             // refresh the page
