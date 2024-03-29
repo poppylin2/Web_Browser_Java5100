@@ -8,11 +8,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import org.springframework.context.ApplicationListener;
-
 import URL.urlList;
 import javafx.application.Platform;
 import javafx.scene.web.WebView;
+import listener.pageMovement;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 
@@ -74,16 +73,19 @@ public class Main extends JFrame {
                 urlList.add(url);
                 // re-render user interface
                 refresh(url);
-            }
-        });
+                }
+            });
     }
 
     private static WebView webView;
 
-    // refesh the page
+    //Reload the page based on the URL
     public static void refresh(String url) {
         Platform.runLater(() -> {
-            webView.getEngine().load(url);
+            webView = new WebView();
+            webPanel.setScene(new Scene(webView));
+            webView.getEngine().load(url);//load the page
+            html.setText(url);//reload the page based on URL
         });
     }
 
@@ -182,9 +184,11 @@ public class Main extends JFrame {
         for (int i = 0; i < Constant.toolBarButtonNameList.length; i++) {
             JButton button = new JButton(Constant.toolBarButtonNameList[i]);
             button.setFont(Constant.smallFont);
-            //Adding interaction for button
-            if (Constant.toolBarButtonNameList[i].equals("Forward")){
-                button.addActionListener();
+            // Adding interaction for button
+            if (Constant.toolBarButtonNameList[i].equals("Forward")) {
+                button.addActionListener(new pageMovement(Constant.FORWARD));
+            } else if (Constant.toolBarButtonNameList[i].equals("Backward")) {
+                button.addActionListener(new pageMovement(Constant.BACKWARD));
             }
             jToolBar1.add(button);
         }
