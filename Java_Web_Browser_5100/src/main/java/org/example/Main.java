@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 
 import javax.swing.*;
 
+import URL.urlList;
 import javafx.application.Platform;
 import javafx.scene.web.WebView;
 import javafx.embed.swing.JFXPanel;
@@ -46,6 +47,7 @@ public class Main extends JFrame {
     static {
         html.setFont(Constant.smallFont);
         html.setText("https://www.google.com");
+        urlList.add("https://www.google.com");
     }
 
     /*
