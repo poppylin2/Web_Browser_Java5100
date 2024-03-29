@@ -3,8 +3,12 @@ package org.example;
 import utils.Constant;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
+
+import org.springframework.context.ApplicationListener;
 
 import URL.urlList;
 import javafx.application.Platform;
@@ -62,6 +66,25 @@ public class Main extends JFrame {
 
     static {
         redirect.setFont(Constant.smallFont);
+        redirect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                // add url to url list
+                String url = html.getText();
+                urlList.add(url);
+                // re-render user interface
+                refresh(url);
+            }
+        });
+    }
+
+    private static WebView webView;
+
+    // refesh the page
+    public static void refresh(String url) {
+        Platform.runLater(() -> {
+            webView.getEngine().load(url);
+        });
     }
 
     public Main() {
@@ -80,7 +103,7 @@ public class Main extends JFrame {
         // initialize toolbar
         initToolBar();
 
-        //initialize web View
+        // initialize web View
         initWeb();
 
         // Add the workspace to the window
@@ -93,9 +116,9 @@ public class Main extends JFrame {
     /*
      * Initialize Web View
      */
-    private void initWeb(){
-        Platform.runLater(()-> {
-            //load HTML view
+    private void initWeb() {
+        Platform.runLater(() -> {
+            // load HTML view
             WebView webView = new WebView();
             webPanel.setScene(new Scene(webView));
             webView.getEngine().load(html.getText());
@@ -103,6 +126,7 @@ public class Main extends JFrame {
 
         workSpace.add(webPanel, BorderLayout.CENTER);
     }
+
     /*
      * Initialize MenuBar
      */
@@ -140,27 +164,35 @@ public class Main extends JFrame {
             item.setFont(Constant.smallFont);
             jMenu3.add(item);
         }
-        
+
         jMenuBar.add(jMenu3);
 
         this.setJMenuBar(jMenuBar);
     }
 
-    /*
-     * Initialize the toolbar
-     */
     private void initToolBar() {
-        // Set the toolbar1, which contains the buttons
-        JToolBar jToolBar1 = new JToolBar();
+        initToolBar1();
+        initToolBar2();
+    }
 
-
+    // initialize toolbar1
+    private void initToolBar1() {
         // Set the buttons, and add them to the toolbar
+        JToolBar jToolBar1 = new JToolBar();
         for (int i = 0; i < Constant.toolBarButtonNameList.length; i++) {
             JButton button = new JButton(Constant.toolBarButtonNameList[i]);
             button.setFont(Constant.smallFont);
+            //Adding interaction for button
+            if (Constant.toolBarButtonNameList[i].equals("Forward")){
+                button.addActionListener();
+            }
             jToolBar1.add(button);
         }
+        toolBarSpace.add(jToolBar1);// add the toolbars to the toolbar space
+    }
 
+    // initialize toolbar2
+    private void initToolBar2() {
         // Set the toolbar2, which contains the address bar
         JToolBar jToolBar2 = new JToolBar();
 
@@ -174,9 +206,7 @@ public class Main extends JFrame {
         jToolBar2.add(redirect);
 
         // add the toolbars to the toolbar space
-        toolBarSpace.add(jToolBar1);
         toolBarSpace.add(jToolBar2);
-
     }
 
     public static void main(String[] args) {

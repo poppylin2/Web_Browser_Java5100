@@ -4,8 +4,8 @@ import java.awt.*;
 
 public interface Constant {
 
-    int MAIN_WIDTH = 1920;
-    int MAIN_HEIGHT = 1080;
+    int MAIN_WIDTH = 800;
+    int MAIN_HEIGHT = 1000;
 
     String[] menuList1 = {"Save as(A)", "Exit(I)"};
 
@@ -21,4 +21,10 @@ public interface Constant {
 
     int SOURCE_WIDTH = 800;
     int SOURCE_HEIGHT = 600;
+
+    //page move forward
+    public static final Integer FORWARD = 1;
+
+    //page move backward
+    public static final Integer BACKWARD = 2;
 }
