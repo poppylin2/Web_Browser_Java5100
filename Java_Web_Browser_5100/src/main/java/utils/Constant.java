@@ -19,8 +19,8 @@ public interface Constant {
 
     String[] toolBarButtonNameList = {"Save as", "Backward", "Forward", "View Source Code", "Exit"};
 
-    int SOURCE_WIDTH = 800;
-    int SOURCE_HEIGHT = 600;
+    int SOURCE_WIDTH = 700;
+    int SOURCE_HEIGHT = 500;
 
     //page move forward
     public static final Integer FORWARD = 1;

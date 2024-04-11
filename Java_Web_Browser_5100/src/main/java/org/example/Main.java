@@ -3,17 +3,25 @@ package org.example;
 import utils.Constant;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.RenderingHints.Key;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Ref;
 
 import javax.swing.*;
 
 import URL.urlList;
 import javafx.application.Platform;
 import javafx.scene.web.WebView;
+import listener.Exit;
+import listener.FullScreen;
+import listener.Refresh;
+import listener.SaveCode;
+import listener.SourceCodeSee;
 import listener.pageMovement;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
+import java.awt.event.KeyEvent;
 
 /**
  * Main interface
@@ -96,6 +104,9 @@ public class Main extends JFrame {
         // Set the window in the center of the screen
         this.setLocationRelativeTo(null);
 
+        // Set the window to be visible
+        this.setVisible(true);
+
         // Set the window to be closed when the close button is clicked
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -137,33 +148,74 @@ public class Main extends JFrame {
         JMenuBar jMenuBar = new JMenuBar();
 
         // Set the Jmenu1 'File' with menuItems
-        JMenu jMenu1 = new JMenu("File");
+        JMenu jMenu1 = new JMenu("File(F)");
+        // Set the hotkey
+        jMenu1.setMnemonic(KeyEvent.VK_F);
+        jMenu1.setFont(Constant.baseFont);
+
+
         jMenu1.setFont(Constant.baseFont);
         for (int i = 0; i < Constant.menuList1.length; i++) {
             JMenuItem item = new JMenuItem(Constant.menuList1[i]);
             item.setFont(Constant.smallFont);
+            // Adding interaction for menu items
+            if (Constant.menuList1[i].equals("Save as(A)")) {
+                item.addActionListener(new SaveCode());
+                // Set the hotkey(A+ALT)
+                item.setMnemonic(KeyEvent.VK_A);
+                // Set the hotkey(Ctrl+S)
+                item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
+            } else if (Constant.menuList1[i].equals("Exit(I)")) {
+                item.addActionListener(new Exit(this));
+                item.setMnemonic(KeyEvent.VK_I);
+                item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, KeyEvent.CTRL_MASK));
+            }
+
             jMenu1.add(item);
         }
 
         jMenuBar.add(jMenu1);
 
         // Set the Jmenu2 'Edit' with menuItems
-        JMenu jMenu2 = new JMenu("Edit");
+        JMenu jMenu2 = new JMenu("Edit(E)");
+        jMenu2.setMnemonic(KeyEvent.VK_E);
         jMenu2.setFont(Constant.baseFont);
         for (int i = 0; i < Constant.menuList2.length; i++) {
             JMenuItem item = new JMenuItem(Constant.menuList2[i]);
             item.setFont(Constant.smallFont);
+            // Adding interaction for menu items
+            if (Constant.menuList2[i].equals("Forward")) {
+                item.addActionListener(new pageMovement(Constant.FORWARD));
+                item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_MASK));
+            } else if (Constant.menuList2[i].equals("Backward")) {
+                item.addActionListener(new pageMovement(Constant.BACKWARD));
+                item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, KeyEvent.CTRL_MASK));
+            }
+
             jMenu2.add(item);
         }
 
         jMenuBar.add(jMenu2);
 
         // Set the Jmenu3 'View' with menuItems
-        JMenu jMenu3 = new JMenu("View");
+        JMenu jMenu3 = new JMenu("View(V)");
+        jMenu3.setMnemonic(KeyEvent.VK_V);
         jMenu3.setFont(Constant.baseFont);
         for (int i = 0; i < Constant.menuList3.length; i++) {
             JMenuItem item = new JMenuItem(Constant.menuList3[i]);
             item.setFont(Constant.smallFont);
+            // Adding interaction for menu items
+            if (Constant.menuList3[i].equals("Full Screen")) {
+                item.addActionListener(new FullScreen(this));
+                item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, KeyEvent.CTRL_MASK));
+            } else if (Constant.menuList3[i].equals("View Source Code(C)")) {
+                item.addActionListener(new SourceCodeSee());
+                item.setMnemonic(KeyEvent.VK_C);
+                item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK));
+            } else if (Constant.menuList3[i].equals("Refresh")) {
+                item.addActionListener(new Refresh());   
+                item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_MASK));    
+            }
             jMenu3.add(item);
         }
 
@@ -189,6 +241,13 @@ public class Main extends JFrame {
                 button.addActionListener(new pageMovement(Constant.FORWARD));
             } else if (Constant.toolBarButtonNameList[i].equals("Backward")) {
                 button.addActionListener(new pageMovement(Constant.BACKWARD));
+            } else if (Constant.toolBarButtonNameList[i].equals("View Source Code")) {
+                button.addActionListener(new SourceCodeSee());   
+            } else if (Constant.toolBarButtonNameList[i].equals("Save as")){
+                button.addActionListener(new SaveCode());
+            } else if (Constant.toolBarButtonNameList[i].equals("Exit")) {
+                button.addActionListener(new Exit(this));
+                
             }
             jToolBar1.add(button);
         }
