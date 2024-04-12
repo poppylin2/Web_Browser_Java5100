@@ -149,12 +149,11 @@ public class Main extends JFrame {
 
         // Set the Jmenu1 'File' with menuItems
         JMenu jMenu1 = new JMenu("File(F)");
-        // Set the hotkey
+        // Set the hotkey(ALT+F)
         jMenu1.setMnemonic(KeyEvent.VK_F);
         jMenu1.setFont(Constant.baseFont);
 
 
-        jMenu1.setFont(Constant.baseFont);
         for (int i = 0; i < Constant.menuList1.length; i++) {
             JMenuItem item = new JMenuItem(Constant.menuList1[i]);
             item.setFont(Constant.smallFont);
@@ -163,11 +162,13 @@ public class Main extends JFrame {
                 item.addActionListener(new SaveCode());
                 // Set the hotkey(A+ALT)
                 item.setMnemonic(KeyEvent.VK_A);
-                // Set the hotkey(Ctrl+S)
+                // Set the shortcut key(Ctrl+S)
                 item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
             } else if (Constant.menuList1[i].equals("Exit(I)")) {
                 item.addActionListener(new Exit(this));
+                // Set the hotkey(I+ALT)
                 item.setMnemonic(KeyEvent.VK_I);
+                // Set the shortcut key(Ctrl+E)
                 item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, KeyEvent.CTRL_MASK));
             }
 
@@ -186,9 +187,11 @@ public class Main extends JFrame {
             // Adding interaction for menu items
             if (Constant.menuList2[i].equals("Forward")) {
                 item.addActionListener(new pageMovement(Constant.FORWARD));
+                // Set the shortcut key(Ctrl+Z)
                 item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_MASK));
             } else if (Constant.menuList2[i].equals("Backward")) {
                 item.addActionListener(new pageMovement(Constant.BACKWARD));
+                // Set the shortcut key(Ctrl+D)
                 item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, KeyEvent.CTRL_MASK));
             }
 
@@ -206,13 +209,18 @@ public class Main extends JFrame {
             item.setFont(Constant.smallFont);
             // Adding interaction for menu items
             if (Constant.menuList3[i].equals("Full Screen")) {
+
+                // Set the shortcut key(Ctrl+U)
                 item.addActionListener(new FullScreen(this));
                 item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, KeyEvent.CTRL_MASK));
             } else if (Constant.menuList3[i].equals("View Source Code(C)")) {
                 item.addActionListener(new SourceCodeSee());
+                //set the hotkey(C+ALT)
                 item.setMnemonic(KeyEvent.VK_C);
+                //set the shortcut key(Ctrl+C)
                 item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK));
             } else if (Constant.menuList3[i].equals("Refresh")) {
+                //set the shortcut key(Ctrl+R)
                 item.addActionListener(new Refresh());   
                 item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_MASK));    
             }
