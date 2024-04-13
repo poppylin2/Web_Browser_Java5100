@@ -213,7 +213,7 @@ public class Main extends JFrame {
                 // Set the shortcut key(Ctrl+U)
                 item.addActionListener(new FullScreen(this));
                 item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, KeyEvent.CTRL_MASK));
-            } else if (Constant.menuList3[i].equals("View Source Code(C)")) {
+            } else if (Constant.menuList3[i].equals("View Source Code")) {
                 item.addActionListener(new SourceCodeSee());
                 //set the hotkey(C+ALT)
                 item.setMnemonic(KeyEvent.VK_C);
