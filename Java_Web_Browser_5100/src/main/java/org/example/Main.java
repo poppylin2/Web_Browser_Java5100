@@ -148,7 +148,7 @@ public class Main extends JFrame {
         JMenuBar jMenuBar = new JMenuBar();
 
         // Set the Jmenu1 'File' with menuItems
-        JMenu jMenu1 = new JMenu("File(F)");
+        JMenu jMenu1 = new JMenu("File");
         // Set the hotkey(ALT+F)
         jMenu1.setMnemonic(KeyEvent.VK_F);
         jMenu1.setFont(Constant.baseFont);
@@ -178,7 +178,7 @@ public class Main extends JFrame {
         jMenuBar.add(jMenu1);
 
         // Set the Jmenu2 'Edit' with menuItems
-        JMenu jMenu2 = new JMenu("Edit(E)");
+        JMenu jMenu2 = new JMenu("Edit");
         jMenu2.setMnemonic(KeyEvent.VK_E);
         jMenu2.setFont(Constant.baseFont);
         for (int i = 0; i < Constant.menuList2.length; i++) {
@@ -201,7 +201,7 @@ public class Main extends JFrame {
         jMenuBar.add(jMenu2);
 
         // Set the Jmenu3 'View' with menuItems
-        JMenu jMenu3 = new JMenu("View(V)");
+        JMenu jMenu3 = new JMenu("View");
         jMenu3.setMnemonic(KeyEvent.VK_V);
         jMenu3.setFont(Constant.baseFont);
         for (int i = 0; i < Constant.menuList3.length; i++) {
