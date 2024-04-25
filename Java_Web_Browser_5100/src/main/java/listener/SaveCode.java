@@ -26,28 +26,26 @@ public class SaveCode implements ActionListener {
      * @param e
      */
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // get the current page URL
-        String url = urlList.getCurrent();
-        //anlayze URL, get the html code
-        try {
-            String htmlCode = WebsiteHTMLGetter.getHTML(url);
-
-            //function on JAVA IO ,generate file
-            String fileName = removeUrlPrefix(url);
-            String filePath = "src/main/java/sourceCode/" + fileName;
-            
-
-            //write file
-            writeFile(filePath, htmlCode);
-
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-            JOptionPane.showMessageDialog(null, "html code get error");
-        }
-
-    }
+     @Override
+     public void actionPerformed(ActionEvent e) {
+         // get URL
+         String url = urlList.getCurrent();
+         // analyze URL, get html code
+         try {
+             String htmlCode = WebsiteHTMLGetter.getHTMLCode(url);
+ 
+             // implement Java IO to save the html code
+             String fileName = removeUrlPrefix(url);
+             String filePath = System.getProperty("user.home") + "/Desktop/" + fileName;
+ 
+             // wrtie file
+             writeFile(filePath, htmlCode);
+         } catch (IOException ioException) {
+             ioException.printStackTrace();
+             JOptionPane.showMessageDialog(null, "Failed to get HTML code");
+         }
+ 
+     }
 
     /**
      * write file

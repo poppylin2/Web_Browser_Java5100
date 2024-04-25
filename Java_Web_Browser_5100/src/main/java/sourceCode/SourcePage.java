@@ -99,7 +99,7 @@ public class SourcePage extends JFrame{
         sourceCode.setFont(Constant.smallFont);
         sourceCode.setLineWrap(true);
     try {
-        sourceCode.setText(WebsiteHTMLGetter.getHTML(urlList.getCurrent()));
+        sourceCode.setText(WebsiteHTMLGetter.getHTMLCode(urlList.getCurrent()));
     }catch (IOException e){
         e.printStackTrace();
         JOptionPane.showMessageDialog(null, "html code get error");

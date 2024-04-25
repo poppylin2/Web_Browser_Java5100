@@ -81,19 +81,19 @@ public class Main extends JFrame {
                 urlList.add(url);
                 // re-render user interface
                 refresh(url);
-                }
-            });
+            }
+        });
     }
 
     private static WebView webView;
 
-    //Reload the page based on the URL
+    // Reload the page based on the URL
     public static void refresh(String url) {
         Platform.runLater(() -> {
             webView = new WebView();
             webPanel.setScene(new Scene(webView));
-            webView.getEngine().load(url);//load the page
-            html.setText(url);//reload the page based on URL
+            webView.getEngine().load(url);// load the page
+            html.setText(url);// reload the page based on URL
         });
     }
 
@@ -148,11 +148,9 @@ public class Main extends JFrame {
         JMenuBar jMenuBar = new JMenuBar();
 
         // Set the Jmenu1 'File' with menuItems
-        JMenu jMenu1 = new JMenu("File");
-        // Set the hotkey(ALT+F)
-        jMenu1.setMnemonic(KeyEvent.VK_F);
-        jMenu1.setFont(Constant.baseFont);
+        JMenu jMenu1 = new JMenu("File(F)");
 
+        jMenu1.setFont(Constant.baseFont);
 
         for (int i = 0; i < Constant.menuList1.length; i++) {
             JMenuItem item = new JMenuItem(Constant.menuList1[i]);
@@ -160,8 +158,16 @@ public class Main extends JFrame {
             // Adding interaction for menu items
             if (Constant.menuList1[i].equals("Save as(A)")) {
                 item.addActionListener(new SaveCode());
-                // Set the hotkey(A+ALT)
-                item.setMnemonic(KeyEvent.VK_A);
+                // setup hotkey
+                KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_F, KeyEvent.META_DOWN_MASK);
+                Action openMenuAction = new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        jMenu1.doClick();
+                    }
+                };
+                jMenu1.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(keyStroke, "openFileMenu");
+                jMenu1.getActionMap().put("openFileMenu", openMenuAction);
                 // Set the shortcut key(Ctrl+S)
                 item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
             } else if (Constant.menuList1[i].equals("Exit(I)")) {
@@ -178,8 +184,18 @@ public class Main extends JFrame {
         jMenuBar.add(jMenu1);
 
         // Set the Jmenu2 'Edit' with menuItems
-        JMenu jMenu2 = new JMenu("Edit");
-        jMenu2.setMnemonic(KeyEvent.VK_E);
+        JMenu jMenu2 = new JMenu("Edit(E)");
+
+        KeyStroke keyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_E, KeyEvent.META_DOWN_MASK);
+        Action openMenuAction = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jMenu2.doClick();
+            }
+        };
+        jMenu2.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(keyStroke, "openFileMenu");
+        jMenu2.getActionMap().put("openFileMenu", openMenuAction);
+
         jMenu2.setFont(Constant.baseFont);
         for (int i = 0; i < Constant.menuList2.length; i++) {
             JMenuItem item = new JMenuItem(Constant.menuList2[i]);
@@ -201,28 +217,37 @@ public class Main extends JFrame {
         jMenuBar.add(jMenu2);
 
         // Set the Jmenu3 'View' with menuItems
-        JMenu jMenu3 = new JMenu("View");
-        jMenu3.setMnemonic(KeyEvent.VK_V);
+        JMenu jMenu3 = new JMenu("View(V)");
+
         jMenu3.setFont(Constant.baseFont);
         for (int i = 0; i < Constant.menuList3.length; i++) {
             JMenuItem item = new JMenuItem(Constant.menuList3[i]);
             item.setFont(Constant.smallFont);
             // Adding interaction for menu items
             if (Constant.menuList3[i].equals("Full Screen")) {
+                
+                KeyStroke keyStroke2 = KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.META_DOWN_MASK);
+                Action openMenuAction2 = new AbstractAction() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        jMenu3.doClick();
+                    }
+                };
+                jMenu3.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(keyStroke2, "openFileMenu");
+                jMenu3.getActionMap().put("openFileMenu", openMenuAction2);
 
                 // Set the shortcut key(Ctrl+U)
                 item.addActionListener(new FullScreen(this));
                 item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, KeyEvent.CTRL_MASK));
-            } else if (Constant.menuList3[i].equals("View Source Code")) {
+            } else if (Constant.menuList3[i].equals("View Source Code(C)")) {
                 item.addActionListener(new SourceCodeSee());
-                //set the hotkey(C+ALT)
-                item.setMnemonic(KeyEvent.VK_C);
-                //set the shortcut key(Ctrl+C)
+
+                // set the shortcut key(Ctrl+C)
                 item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_MASK));
             } else if (Constant.menuList3[i].equals("Refresh")) {
-                //set the shortcut key(Ctrl+R)
-                item.addActionListener(new Refresh());   
-                item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_MASK));    
+                // set the shortcut key(Ctrl+R)
+                item.addActionListener(new Refresh());
+                item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_MASK));
             }
             jMenu3.add(item);
         }
@@ -250,12 +275,12 @@ public class Main extends JFrame {
             } else if (Constant.toolBarButtonNameList[i].equals("Backward")) {
                 button.addActionListener(new pageMovement(Constant.BACKWARD));
             } else if (Constant.toolBarButtonNameList[i].equals("View Source Code")) {
-                button.addActionListener(new SourceCodeSee());   
-            } else if (Constant.toolBarButtonNameList[i].equals("Save as")){
+                button.addActionListener(new SourceCodeSee());
+            } else if (Constant.toolBarButtonNameList[i].equals("Save as")) {
                 button.addActionListener(new SaveCode());
             } else if (Constant.toolBarButtonNameList[i].equals("Exit")) {
                 button.addActionListener(new Exit(this));
-                
+
             }
             jToolBar1.add(button);
         }
